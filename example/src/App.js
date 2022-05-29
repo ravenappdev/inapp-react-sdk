@@ -1,10 +1,24 @@
 import React from 'react'
 
-import { ExampleComponent } from '@ravenapp/raven-inapp-react'
+import { RavenInAppComponent } from '@ravenapp/raven-inapp-react'
 import '@ravenapp/raven-inapp-react/dist/index.css'
 
 const App = () => {
-  return <ExampleComponent text="Create React Library Example 😄" />
+
+  function onClickNotification(callbackObj) {
+    console.log(callbackObj)
+    alert(callbackObj.data)
+  }
+
+
+  return (
+    <RavenInAppComponent
+      userId='priyansh'
+      appId='ead40fc4-34a2-4e7c-abaf-337c00eef79a'
+      signature='a5d61c6d6855a168665b9d69bb0f50318f56c6d5e22879ab8f761d7012ea9d0d'
+      onClickNotification={onClickNotification}
+    />
+  )
 }
 
 export default App

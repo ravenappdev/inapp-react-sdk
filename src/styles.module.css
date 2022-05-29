@@ -1,9 +1,12 @@
-/* add css module styles here (optional) */
-
-.test {
-  margin: 2em;
-  padding: 0.5em;
-  border: 2px solid #000;
-  font-size: 2em;
-  text-align: center;
+h1,h2,h3,h4,h5,h6,p{
+  margin: 0;
+}
+button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: transparent;
+  position: relative;
+  border: none;
+  cursor: pointer;
 }
