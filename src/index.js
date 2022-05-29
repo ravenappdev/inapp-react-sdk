@@ -4,7 +4,7 @@ import BellIcon from './bell-icon'
 import Notifications from './notifications'
 import styles from './styles.module.css'
 
-export const RavenInAppComponent = ({
+export const InAppNotificationCenter = ({
   color = 'blue',
   indicatorType = 'count',
   fontStyle,
@@ -12,7 +12,7 @@ export const RavenInAppComponent = ({
   appId,
   signature,
   onClickNotification,
-  displayStyle = 'bubble',
+  displayStyle = 'drawer',
   position = 'left'
 }) => {
   return (
@@ -27,12 +27,12 @@ export const RavenInAppComponent = ({
       <body>
         <NotificationProvider userId={userId} appId={appId}>
           <div style={{ fontFamily: fontStyle ? fontStyle : 'inherit' }}>
-            <BellIcon
+            {/* <BellIcon
               color={color}
               indicatorType={indicatorType}
               userId={userId}
               appId={appId}
-            />
+            /> */}
             <Notifications
               color={color}
               indicatorType={indicatorType}
@@ -43,7 +43,6 @@ export const RavenInAppComponent = ({
               onClickNotification={onClickNotification}
               displayStyle={displayStyle}
               position={position}
-              header={header}
             />
           </div>
         </NotificationProvider>

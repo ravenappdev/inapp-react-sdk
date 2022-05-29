@@ -2,18 +2,22 @@ import React, { useState, useEffect } from 'react'
 import {
   fetchNotificationsService,
   userSetupService,
-  updateLastSeenService,
   ablyTokenService,
-  deliveryStatusUpdateService
+  deliveryStatusUpdateService,
+  markAllReadService,
+  fetchCountService
 } from '../api/notificationService'
 import { useNotficationContext } from '../context'
 import Notification from './notification'
 import styles from './notifications.module.css'
 import Ably from 'ably'
 import Swal from 'sweetalert2'
+import BellIcon from '../bell-icon'
+import { setTitle } from '../api/utils'
 
 export default function Notifications({
   color,
+  indicatorType,
   fontStyle,
   userId,
   appId,
@@ -22,12 +26,21 @@ export default function Notifications({
   displayStyle,
   position
 }) {
-  const { count, isOpen, closeModal, updateCount } = useNotficationContext()
+  let client = new Ably.Realtime({
+    authUrl: ablyTokenService(appId, userId, signature)
+  })
+
+  let channelName = appId + '-' + userId
+
+  let channel = client.channels.get(channelName)
+  const { isOpen, closeModal, updateCount } = useNotficationContext()
   const [notifications, setNotifications] = useState([])
   const [isLoading, setIsLoading] = useState(false)
   const [showLoadButton, setShowLoadButton] = useState(true)
   const [unread, setUnread] = useState(0)
   const [isLoadingMore, setIsLoadingMore] = useState(false)
+  const [count, setCount] = useState(0)
+
   async function checkUserExists() {
     try {
       if (!localStorage.getItem('userExists')) {
@@ -41,41 +54,23 @@ export default function Notifications({
       console.log(error)
     }
   }
+
+  async function fetchCount() {
+    try {
+      const res = await fetchCountService(userId, appId)
+      setCount(res.data.unread_count)
+      setTitle()
+    } catch (error) {
+      console.log(error)
+    }
+  }
   async function initialize() {
     try {
-      setIsLoading(true)
-      const res = await fetchNotificationsService(
-        userId,
-        appId,
-        signature,
-        null
-      )
-      setNotifications(res.data.notifications)
-      setShowLoadButton(!(res.data.notifications.length < 20))
-      setUnread(0)
-      let tempUnread = 0
-      res.data.notifications.map((notification) => {
-        if (notification.status === 'UNREAD') {
-          tempUnread += 1
-        }
-      })
-      setUnread(tempUnread)
-      setIsLoading(false)
-
-      if (displayStyle === 'fullScreen') {
-        updateLastSeenService(userId, appId)
-      }
-
-      let client = new Ably.Realtime({
-        authUrl: ablyTokenService(appId, userId, signature)
-      })
-
-      let channelName = appId + '-' + userId
-
-      let channel = client.channels.get(channelName)
+      fetchCount()
+      saveData()
       channel.subscribe((message) => {
-        updateCount(count + 1)
-        setUnread(unread + 1)
+        setUnread((prevState) => prevState + 1)
+        setCount((prevState) => prevState + 1)
         setTimeout(() => {
           deliveryStatusUpdateService(
             appId,
@@ -95,7 +90,7 @@ export default function Notifications({
           timestamp: message.data.timestamp,
           status: 'UNREAD'
         }
-        setNotifications([temp].concat(notifications))
+        setNotifications((prevState) => [temp].concat(prevState))
         Swal.fire({
           title: message.data.title,
           text: message.data.body,
@@ -112,7 +107,7 @@ export default function Notifications({
           }
         }).then((result) => {
           if (result.isDismissed && result.dismiss?.toString() === 'close') {
-            updateCount(count - 1)
+            setCount((prevState) => prevState + 1)
           }
         })
       })
@@ -164,9 +159,50 @@ export default function Notifications({
       console.log(error)
     }
   }
+
+  async function saveData() {
+    try {
+      setIsLoading(true)
+      const res = await fetchNotificationsService(
+        userId,
+        appId,
+        signature,
+        null
+      )
+      setNotifications(res.data.notifications)
+      setShowLoadButton(!(res.data.notifications.length < 20))
+      setUnread(0)
+      let tempUnread = 0
+      res.data.notifications.map((notification) => {
+        if (notification.status === 'UNREAD') {
+          tempUnread += 1
+        }
+      })
+      setUnread(tempUnread)
+      setIsLoading(false)
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
+  async function markAllRead() {
+    try {
+      const res = await markAllReadService(
+        userId,
+        appId,
+        signature,
+        notifications[0].message_id
+      )
+      saveData()
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
   return (
     <React.Fragment>
-      {isOpen && displayStyle !== 'fullScreen' && (
+      <BellIcon color={color} indicatorType={indicatorType} count={count} />
+      {isOpen && (
         <div
           style={{
             fontFamily: fontStyle ? fontStyle : 'inherit',
@@ -217,6 +253,7 @@ export default function Notifications({
                     <button
                       className={styles.btn}
                       style={{ color: color ? color : 'blue' }}
+                      onClick={saveData}
                     >
                       <i className='fas fa-redo'></i>
                     </button>
@@ -226,6 +263,7 @@ export default function Notifications({
                     <button
                       className={styles.btn}
                       style={{ color: color ? color : 'blue' }}
+                      onClick={markAllRead}
                     >
                       <i className='fas fa-check-double'></i>
                     </button>

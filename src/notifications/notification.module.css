@@ -45,6 +45,7 @@
 }
 .actions {
   position: absolute;
+  display: none;
   width: 160px;
   box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
   border-radius: 0.2rem;
@@ -84,7 +85,7 @@ button {
   font-size: 1rem;
 }
 
-.btn {
+.action__btn {
   margin-left: 0.3rem;
   padding: 0.5rem;
   height: 2rem;
@@ -93,11 +94,18 @@ button {
   margin-right: -0.5rem;
 }
 
-.btn:hover {
+.action__btn:hover {
   background-color: #f1f1f1;
   border-radius: 1rem;
 }
 
+.action__btn:hover + .actions{
+  display: block;
+}
+
+.actions:hover{
+  display: block;
+}
 .tooltip {
   position: relative;
   display: inline-block;

@@ -1,6 +1,5 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import styles from './notification.module.css'
-import { useNotficationContext } from '../context'
 import { updateNotificationService } from '../api/notificationService'
 import { getDateTimeString, timeDiff } from '../api/utils'
 
@@ -13,8 +12,6 @@ export default function Notification({
   updateUnreadCount,
   onClickNotification
 }) {
-  const { selectedNotification, setSelectedNotification } =
-    useNotficationContext()
   const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false)
   const [isOpen, setIsOpen] = useState(false)
   const [notification, setNotification] = useState(notificationProp)
@@ -38,6 +35,7 @@ export default function Notification({
       )
       updateUnreadCount(status, messageId, notification.status)
       setNotification({ ...notification, status: status })
+      setIsOpen(false)
     } catch (error) {
       console.log(error)
     }
@@ -75,7 +73,7 @@ export default function Notification({
               <p>{notification.message_body.title}</p>
               <div className={styles.actions__main}>
                 <button
-                  className={styles.btn}
+                  className={styles.action__btn}
                   style={{ color: 'rgb(104, 101, 101)' }}
                   onClick={(e) => {
                     e.stopPropagation()
@@ -84,7 +82,7 @@ export default function Notification({
                 >
                   <i className='fas fa-ellipsis-v'></i>
                 </button>
-                {isOpen && (
+                
                   <div className={styles.actions}>
                     {notification.status !== 'READ' && (
                       <div
@@ -118,7 +116,7 @@ export default function Notification({
                       </div>
                     )}
                   </div>
-                )}
+                
               </div>
             </div>
             <div className={styles.des__time}>
