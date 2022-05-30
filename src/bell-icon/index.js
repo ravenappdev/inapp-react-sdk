@@ -1,15 +1,14 @@
 import React, { useEffect } from 'react'
 import styles from './bellicon.module.css'
-import { useNotficationContext } from '../context'
 
-export default function BellIcon({ color, indicatorType, count }) {
-  const {  isOpen, openModal, closeModal, fetchCount } =
-    useNotficationContext()
-
-  // useEffect(() => {
-  //   fetchCount()
-  // },[])
-
+export default function BellIcon({
+  color,
+  indicatorType,
+  count,
+  isOpen,
+  openModal,
+  closeModal
+}) {
   function toggleModal() {
     if (isOpen) {
       closeModal()

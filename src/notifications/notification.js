@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
 import styles from './notification.module.css'
 import { updateNotificationService } from '../api/notificationService'
 import { getDateTimeString, timeDiff } from '../api/utils'

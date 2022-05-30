@@ -5,9 +5,9 @@ import {
   ablyTokenService,
   deliveryStatusUpdateService,
   markAllReadService,
-  fetchCountService
+  fetchCountService,
+  updateLastSeenService
 } from '../api/notificationService'
-import { useNotficationContext } from '../context'
 import Notification from './notification'
 import styles from './notifications.module.css'
 import Ably from 'ably'
@@ -26,14 +26,7 @@ export default function Notifications({
   displayStyle,
   position
 }) {
-  let client = new Ably.Realtime({
-    authUrl: ablyTokenService(appId, userId, signature)
-  })
-
-  let channelName = appId + '-' + userId
-
-  let channel = client.channels.get(channelName)
-  const { isOpen, closeModal, updateCount } = useNotficationContext()
+  const [isOpen, setIsOpen] = useState(false)
   const [notifications, setNotifications] = useState([])
   const [isLoading, setIsLoading] = useState(false)
   const [showLoadButton, setShowLoadButton] = useState(true)
@@ -59,18 +52,30 @@ export default function Notifications({
     try {
       const res = await fetchCountService(userId, appId)
       setCount(res.data.unread_count)
-      setTitle()
+      setTitle(res.data.unread_count)
     } catch (error) {
       console.log(error)
     }
   }
+
+  
   async function initialize() {
     try {
       fetchCount()
       saveData()
+      let client = new Ably.Realtime({
+        authUrl: ablyTokenService(appId, userId, signature)
+      })
+
+      let channelName = appId + '-' + userId
+
+      let channel = client.channels.get(channelName)
       channel.subscribe((message) => {
         setUnread((prevState) => prevState + 1)
-        setCount((prevState) => prevState + 1)
+        setCount((prevState) => {
+          setTitle(prevState + 1)
+          return prevState + 1
+        })
         setTimeout(() => {
           deliveryStatusUpdateService(
             appId,
@@ -107,7 +112,10 @@ export default function Notifications({
           }
         }).then((result) => {
           if (result.isDismissed && result.dismiss?.toString() === 'close') {
-            setCount((prevState) => prevState + 1)
+            setCount((prevState) => {
+              setTitle(prevState - 1)
+              return prevState - 1
+            })
           }
         })
       })
@@ -199,9 +207,23 @@ export default function Notifications({
     }
   }
 
+  async function openModal() {
+    setIsOpen(true)
+    setCount(0)
+    await updateLastSeenService(userId, appId)
+    
+  }
+
   return (
     <React.Fragment>
-      <BellIcon color={color} indicatorType={indicatorType} count={count} />
+      <BellIcon
+        color={color}
+        indicatorType={indicatorType}
+        count={count}
+        isOpen={isOpen}
+        openModal={openModal}
+        closeModal={() => setIsOpen(false)}
+      />
       {isOpen && (
         <div
           style={{
@@ -214,7 +236,7 @@ export default function Notifications({
               e.target.className === '_notifications-module__wrapper__f--lY' &&
               isOpen
             ) {
-              closeModal()
+              setIsOpen(false)
             }
           }}
         >
@@ -272,7 +294,7 @@ export default function Notifications({
                   <button
                     className={styles.btn}
                     style={{ color: 'rgb(104, 101, 101)', marginLeft: '1rem' }}
-                    onClick={closeModal}
+                    onClick={() => setIsOpen(false)}
                   >
                     <i className='fas fa-times'></i>
                   </button>

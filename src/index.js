@@ -1,6 +1,4 @@
 import React from 'react'
-import NotificationProvider from './context'
-import BellIcon from './bell-icon'
 import Notifications from './notifications'
 import styles from './styles.module.css'
 
@@ -12,7 +10,7 @@ export const InAppNotificationCenter = ({
   appId,
   signature,
   onClickNotification,
-  displayStyle = 'drawer',
+  displayStyle = 'bubble',
   position = 'left'
 }) => {
   return (
@@ -25,27 +23,19 @@ export const InAppNotificationCenter = ({
         />
       </head>
       <body>
-        <NotificationProvider userId={userId} appId={appId}>
-          <div style={{ fontFamily: fontStyle ? fontStyle : 'inherit' }}>
-            {/* <BellIcon
-              color={color}
-              indicatorType={indicatorType}
-              userId={userId}
-              appId={appId}
-            /> */}
-            <Notifications
-              color={color}
-              indicatorType={indicatorType}
-              fontStyle={fontStyle}
-              userId={userId}
-              appId={appId}
-              signature={signature}
-              onClickNotification={onClickNotification}
-              displayStyle={displayStyle}
-              position={position}
-            />
-          </div>
-        </NotificationProvider>
+        <div style={{ fontFamily: fontStyle ? fontStyle : 'inherit' }}>
+          <Notifications
+            color={color}
+            indicatorType={indicatorType}
+            fontStyle={fontStyle}
+            userId={userId}
+            appId={appId}
+            signature={signature}
+            onClickNotification={onClickNotification}
+            displayStyle={displayStyle}
+            position={position}
+          />
+        </div>
       </body>
     </html>
   )
