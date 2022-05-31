@@ -71,6 +71,7 @@ export default function Notifications({
 
       let channel = client.channels.get(channelName)
       channel.subscribe((message) => {
+        console.log(message)
         setUnread((prevState) => prevState + 1)
         setCount((prevState) => {
           setTitle(prevState + 1)
@@ -210,6 +211,7 @@ export default function Notifications({
   async function openModal() {
     setIsOpen(true)
     setCount(0)
+    setTitle(0)
     await updateLastSeenService(userId, appId)
     
   }

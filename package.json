@@ -1,6 +1,6 @@
 {
   "name": "@ravenapp/raven-inapp-react",
-  "version": "1.0.0",
+  "version": "0.0.2",
   "description": "Made with create-react-library",
   "author": "",
   "license": "",
@@ -24,7 +24,7 @@
     "deploy": "gh-pages -d example/build"
   },
   "peerDependencies": {
-    "react": "^16.0.0"
+    "react": ">=16.0.0"
   },
   "devDependencies": {
     "babel-eslint": "^10.0.3",
