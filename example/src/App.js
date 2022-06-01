@@ -1,7 +1,7 @@
 import React from 'react'
 
 import { InAppNotificationCenter } from '@ravenapp/raven-inapp-react'
-import '@ravenapp/raven-inapp-react/dist/index.css'
+// import '@ravenapp/raven-inapp-react/dist/index.css'
 
 const App = () => {
 

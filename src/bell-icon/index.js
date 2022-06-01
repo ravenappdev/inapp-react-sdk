@@ -1,5 +1,10 @@
-import React, { useEffect } from 'react'
-import styles from './bellicon.module.css'
+import React from 'react'
+import {
+  BellIconButton,
+  DotIndicator,
+  CountIndicator
+} from '../styled-components'
+
 
 export default function BellIcon({
   color,
@@ -9,6 +14,8 @@ export default function BellIcon({
   openModal,
   closeModal
 }) {
+
+  
   function toggleModal() {
     if (isOpen) {
       closeModal()
@@ -18,18 +25,14 @@ export default function BellIcon({
   }
 
   return (
-    <button
-      className={styles.notification__btn}
-      style={{ color: color ? color : 'blue' }}
-      onClick={toggleModal}
-    >
+    <BellIconButton color={color} onClick={toggleModal}>
       <i className={!isOpen ? 'fa-regular fa-bell' : 'fa-solid fa-bell'}></i>
       {!isOpen && count > 0 && indicatorType === 'count' && (
-        <span className={styles.count}>{count}</span>
+        <CountIndicator>{count}</CountIndicator>
       )}
       {!isOpen && count > 0 && indicatorType === 'dot' && (
-        <span className={`fas fa-circle ${styles.dot}`}></span>
+        <DotIndicator className='fas fa-circle'></DotIndicator>
       )}
-    </button>
+    </BellIconButton>
   )
 }

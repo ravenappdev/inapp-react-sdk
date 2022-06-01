@@ -14,6 +14,7 @@ import Ably from 'ably'
 import Swal from 'sweetalert2'
 import BellIcon from '../bell-icon'
 import { setTitle } from '../api/utils'
+import { IconButton } from '../styled-components'
 
 export default function Notifications({
   color,
@@ -58,7 +59,6 @@ export default function Notifications({
     }
   }
 
-  
   async function initialize() {
     try {
       fetchCount()
@@ -213,7 +213,6 @@ export default function Notifications({
     setCount(0)
     setTitle(0)
     await updateLastSeenService(userId, appId)
-    
   }
 
   return (
@@ -235,7 +234,7 @@ export default function Notifications({
           className={styles.wrapper}
           onClick={(e) => {
             if (
-              e.target.className === '_notifications-module__wrapper__f--lY' &&
+              e.target.className === 'wrapper' &&
               isOpen
             ) {
               setIsOpen(false)
@@ -274,32 +273,23 @@ export default function Notifications({
                 </h3>
                 <div className={styles.btn__group}>
                   <div className={styles.tooltip}>
-                    <button
-                      className={styles.btn}
-                      style={{ color: color ? color : 'blue' }}
-                      onClick={saveData}
-                    >
+                    <IconButton color={color} onClick={saveData}>
                       <i className='fas fa-redo'></i>
-                    </button>
+                    </IconButton>
                     <span className={styles.tooltiptext}>Refresh</span>
                   </div>
                   <div className={styles.tooltip}>
-                    <button
-                      className={styles.btn}
-                      style={{ color: color ? color : 'blue' }}
-                      onClick={markAllRead}
-                    >
+                    <IconButton color={color} onClick={markAllRead}>
                       <i className='fas fa-check-double'></i>
-                    </button>
+                    </IconButton>
                     <span className={styles.tooltiptext}>Mark all as read</span>
                   </div>
-                  <button
-                    className={styles.btn}
-                    style={{ color: 'rgb(104, 101, 101)', marginLeft: '1rem' }}
+                  <IconButton
+                    color='rgb(104, 101, 101)'
                     onClick={() => setIsOpen(false)}
                   >
                     <i className='fas fa-times'></i>
-                  </button>
+                  </IconButton>
                 </div>
               </div>
               <p className={styles.date}>
