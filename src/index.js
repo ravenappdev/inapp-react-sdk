@@ -1,6 +1,7 @@
 import React from 'react'
 import Notifications from './notifications'
 import styles from './styles.module.css'
+import Helmet from 'react-helmet'
 
 export const InAppNotificationCenter = ({
   color = 'blue',
@@ -14,29 +15,27 @@ export const InAppNotificationCenter = ({
   position = 'left'
 }) => {
   return (
-    <html>
-      <head>
+    <React.Fragment>
+      <Helmet>
         <base href='/' />
         <link
           rel='stylesheet'
           href='https://use.fontawesome.com/releases/v6.1.1/css/all.css'
         />
-      </head>
-      <body>
-        <div style={{ fontFamily: fontStyle ? fontStyle : 'inherit' }}>
-          <Notifications
-            color={color}
-            indicatorType={indicatorType}
-            fontStyle={fontStyle}
-            userId={userId}
-            appId={appId}
-            signature={signature}
-            onClickNotification={onClickNotification}
-            displayStyle={displayStyle}
-            position={position}
-          />
-        </div>
-      </body>
-    </html>
+      </Helmet>
+      <div style={{ fontFamily: fontStyle ? fontStyle : 'inherit' }}>
+        <Notifications
+          color={color}
+          indicatorType={indicatorType}
+          fontStyle={fontStyle}
+          userId={userId}
+          appId={appId}
+          signature={signature}
+          onClickNotification={onClickNotification}
+          displayStyle={displayStyle}
+          position={position}
+        />
+      </div>
+    </React.Fragment>
   )
 }

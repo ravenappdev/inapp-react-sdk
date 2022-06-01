@@ -82,41 +82,40 @@ export default function Notification({
                 >
                   <i className='fas fa-ellipsis-v'></i>
                 </button>
-                
-                  <div className={styles.actions}>
-                    {notification.status !== 'READ' && (
-                      <div
-                        className={styles.action}
-                        onClick={(e) =>
-                          updateNotification('READ', notification.message_id)
-                        }
-                      >
-                        <i className='fas fa-check-double'></i>
-                        Mark as read
-                      </div>
-                    )}
-                    {notification.status !== 'UNREAD' && (
-                      <div
-                        className={styles.action}
-                        onClick={() =>
-                          updateNotification('UNREAD', notification.message_id)
-                        }
-                      >
-                        <span className='fas fa-circle'></span>Mark as unread
-                      </div>
-                    )}
-                    {notification.status !== 'ARCHIVE' && (
-                      <div
-                        className={styles.action}
-                        onClick={() =>
-                          updateNotification('ARCHIVE', notification.message_id)
-                        }
-                      >
-                        <i className='fas fa-eye-slash'></i>Hide
-                      </div>
-                    )}
-                  </div>
-                
+
+                <div className={styles.actions}>
+                  {notification.status !== 'READ' && (
+                    <div
+                      className={styles.action}
+                      onClick={(e) =>
+                        updateNotification('READ', notification.message_id)
+                      }
+                    >
+                      <i className='fas fa-check-double'></i>
+                      Mark as read
+                    </div>
+                  )}
+                  {notification.status !== 'UNREAD' && (
+                    <div
+                      className={styles.action}
+                      onClick={() =>
+                        updateNotification('UNREAD', notification.message_id)
+                      }
+                    >
+                      <span className='fas fa-circle'></span>Mark as unread
+                    </div>
+                  )}
+                  {notification.status !== 'ARCHIVE' && (
+                    <div
+                      className={styles.action}
+                      onClick={() =>
+                        updateNotification('ARCHIVE', notification.message_id)
+                      }
+                    >
+                      <i className='fas fa-eye-slash'></i>Hide
+                    </div>
+                  )}
+                </div>
               </div>
             </div>
             <div className={styles.des__time}>
@@ -135,7 +134,18 @@ export default function Notification({
       </div>
 
       {isDeleteDialogOpen && (
-        <div className={styles.modal__background}>
+        <div
+          className={styles.modal__background}
+          onClick={(e) => {
+            if (
+              e.target.className ===
+                '_notification-module__modal__background__2fFDe' &&
+              isDeleteDialogOpen
+            ) {
+              setIsDeleteDialogOpen(false)
+            }
+          }}
+        >
           <div className={styles.modal__content}>
             <h3
               style={{
@@ -160,7 +170,7 @@ export default function Notification({
             <div className={styles.btn__group}>
               <button
                 className={styles.cancel__btn}
-                onClick={() => setIsDeleteDialogOpen(close)}
+                onClick={() => setIsDeleteDialogOpen(false)}
               >
                 Cancel
               </button>
