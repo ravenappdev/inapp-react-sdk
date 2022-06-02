@@ -1,8 +1,5 @@
 # @ravenapp/raven-inapp-react
 
-> Made with create-react-library
-
-[![NPM](https://img.shields.io/npm/v/@ravenapp/raven-inapp-react.svg)](https://www.npmjs.com/package/@ravenapp/raven-inapp-react) [![JavaScript Style Guide](https://img.shields.io/badge/code_style-standard-brightgreen.svg)](https://standardjs.com)
 
 ## Install
 
@@ -24,7 +21,25 @@ class Example extends Component {
   }
 }
 ```
+# In-App Angular SDK Demo
+This sample app shows how to use Raven's In-App React SDK in your own Angular app.
 
-## License
+## How to use the demo app
 
- © [](https://github.com/)
+### Install
+
+```
+npm install
+```
+
+### Step3.
+
+Change the userId, appId and signature variables in app.component.ts.
+
+### Step4.
+
+Run the following command in the project root directory to start the app:
+
+```
+ng serve
+```
