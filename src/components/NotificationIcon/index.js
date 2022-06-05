@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import styles from './notification-icon.module.css'
 
 export default function NotificationIcon({
@@ -9,8 +9,6 @@ export default function NotificationIcon({
   openModal,
   closeModal
 }) {
-
-  
   function toggleModal() {
     if (isOpen) {
       closeModal()
@@ -20,14 +18,18 @@ export default function NotificationIcon({
   }
 
   return (
-    <BellIconButton color={color} onClick={toggleModal}>
+    <button
+      className={styles.notification__btn}
+      style={{ color: color ? color : 'blue' }}
+      onClick={toggleModal}
+    >
       <i className={!isOpen ? 'fa-regular fa-bell' : 'fa-solid fa-bell'}></i>
       {!isOpen && count > 0 && indicatorType === 'count' && (
-        <CountIndicator>{count}</CountIndicator>
+        <span className={styles.count}>{count}</span>
       )}
       {!isOpen && count > 0 && indicatorType === 'dot' && (
-        <DotIndicator className='fas fa-circle'></DotIndicator>
+        <span className={`fas fa-circle ${styles.dot}`}></span>
       )}
-    </BellIconButton>
+    </button>
   )
 }
