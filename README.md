@@ -9,7 +9,7 @@ Before setting up the SDK, please make sure you have followed the steps to [setu
 
 ### Step 2.&#x20;
 
-Run the following commands in the project root directory :
+Run the following commands your project root directory :
 
 ```
 npm i @ravenapp/raven-inapp-react
@@ -62,6 +62,11 @@ export default App
 
 You can follow the below process to see the demo of In-App React SDK.
 
+## Clone this repo
+
+```
+git clone https://github.com/ravenappdev/inapp-react-testing.git
+```
 
 ## Run this command in the root folder.
 
