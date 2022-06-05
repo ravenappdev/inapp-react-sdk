@@ -72,7 +72,6 @@ export default function NotificationFeed({
 
       let channel = client.channels.get(channelName)
       channel.subscribe((message) => {
-        console.log(message)
         setUnread((prevState) => prevState + 1)
         setCount((prevState) => {
           setTitle(prevState + 1)
