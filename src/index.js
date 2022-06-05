@@ -1,7 +1,7 @@
 import React from 'react'
-import Notifications from './notifications'
-import Helmet from 'react-helmet'
 import styles from './styles.module.css'
+import Helmet from 'react-helmet'
+import NotificationFeed from './components/NotificationFeed'
 
 export const InAppNotificationCenter = ({
   color = 'blue',
@@ -11,19 +11,20 @@ export const InAppNotificationCenter = ({
   appId,
   signature,
   onClickNotification,
-  displayStyle = 'bubble',
+  displayStyle = 'drawer',
   position = 'left'
 }) => {
   return (
     <React.Fragment>
       <Helmet>
+        <base href='/' />
         <link
           rel='stylesheet'
           href='https://use.fontawesome.com/releases/v6.1.1/css/all.css'
         />
       </Helmet>
       <div style={{ fontFamily: fontStyle ? fontStyle : 'inherit' }}>
-        <Notifications
+        <NotificationFeed
           color={color}
           indicatorType={indicatorType}
           fontStyle={fontStyle}

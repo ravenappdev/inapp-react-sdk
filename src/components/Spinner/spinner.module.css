@@ -1,0 +1,28 @@
+.container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.bubble__height {
+  height: 300px;
+}
+
+.full__height {
+  height: calc(100vh - 71.8px);
+}
+
+.loading {
+  height: 4rem;
+  width: 4rem;
+  margin: 0 auto;
+  border-radius: 50%;
+  border: 6px solid #ccc;
+  animation: spinner 0.6s linear infinite;
+}
+
+@keyframes spinner {
+  to {
+    transform: rotate(360deg);
+  }
+}

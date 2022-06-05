@@ -1,12 +1,7 @@
 import React from 'react'
-import {
-  BellIconButton,
-  DotIndicator,
-  CountIndicator
-} from '../styled-components'
+import styles from './notification-icon.module.css'
 
-
-export default function BellIcon({
+export default function NotificationIcon({
   color,
   indicatorType,
   count,

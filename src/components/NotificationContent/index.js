@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
-import styles from './notification.module.css'
-import { updateNotificationService } from '../api/notificationService'
-import { getDateTimeString, timeDiff } from '../api/utils'
+import styles from './notification-content.module.css'
+import { updateNotificationService } from '../../api/notificationService'
+import { getDateTimeString, timeDiff } from '../../api/utils'
 
 export default function Notification({
   userId,
@@ -47,7 +47,10 @@ export default function Notification({
         className={styles.notification}
         onClick={(e) => {
           if (onClickNotification) {
-            if (e.target.className !== '_notification-module__action__3b0i1') {
+            if (
+              e.target.className !==
+              '_notification-content-module__action__2_k2l'
+            ) {
               if (notification.status === 'UNREAD') {
                 updateNotificationUtil('READ', notification.message_id)
               }
@@ -82,41 +85,40 @@ export default function Notification({
                 >
                   <i className='fas fa-ellipsis-v'></i>
                 </button>
-                
-                  <div className={styles.actions}>
-                    {notification.status !== 'READ' && (
-                      <div
-                        className={styles.action}
-                        onClick={(e) =>
-                          updateNotification('READ', notification.message_id)
-                        }
-                      >
-                        <i className='fas fa-check-double'></i>
-                        Mark as read
-                      </div>
-                    )}
-                    {notification.status !== 'UNREAD' && (
-                      <div
-                        className={styles.action}
-                        onClick={() =>
-                          updateNotification('UNREAD', notification.message_id)
-                        }
-                      >
-                        <span className='fas fa-circle'></span>Mark as unread
-                      </div>
-                    )}
-                    {notification.status !== 'ARCHIVE' && (
-                      <div
-                        className={styles.action}
-                        onClick={() =>
-                          updateNotification('ARCHIVE', notification.message_id)
-                        }
-                      >
-                        <i className='fas fa-eye-slash'></i>Hide
-                      </div>
-                    )}
-                  </div>
-                
+
+                <div className={styles.actions}>
+                  {notification.status !== 'READ' && (
+                    <div
+                      className={styles.action}
+                      onClick={(e) =>
+                        updateNotification('READ', notification.message_id)
+                      }
+                    >
+                      <i className='fas fa-check-double'></i>
+                      Mark as read
+                    </div>
+                  )}
+                  {notification.status !== 'UNREAD' && (
+                    <div
+                      className={styles.action}
+                      onClick={() =>
+                        updateNotification('UNREAD', notification.message_id)
+                      }
+                    >
+                      <span className='fas fa-circle'></span>Mark as unread
+                    </div>
+                  )}
+                  {notification.status !== 'ARCHIVE' && (
+                    <div
+                      className={styles.action}
+                      onClick={() =>
+                        updateNotification('ARCHIVE', notification.message_id)
+                      }
+                    >
+                      <i className='fas fa-eye-slash'></i>Hide
+                    </div>
+                  )}
+                </div>
               </div>
             </div>
             <div className={styles.des__time}>
@@ -135,7 +137,18 @@ export default function Notification({
       </div>
 
       {isDeleteDialogOpen && (
-        <div className={styles.modal__background}>
+        <div
+          className={styles.modal__background}
+          onClick={(e) => {
+            if (
+              e.target.className ===
+                '_notification-content-module__modal__background__1I0-g' &&
+              isDeleteDialogOpen
+            ) {
+              setIsDeleteDialogOpen(false)
+            }
+          }}
+        >
           <div className={styles.modal__content}>
             <h3
               style={{
@@ -160,7 +173,7 @@ export default function Notification({
             <div className={styles.btn__group}>
               <button
                 className={styles.cancel__btn}
-                onClick={() => setIsDeleteDialogOpen(close)}
+                onClick={() => setIsDeleteDialogOpen(false)}
               >
                 Cancel
               </button>

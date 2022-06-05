@@ -1,6 +1,6 @@
 {
   "name": "@ravenapp/raven-inapp-react",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "Made with create-react-library",
   "author": "",
   "license": "",
@@ -55,7 +55,6 @@
     "axios": "^0.27.2",
     "moment": "^2.29.3",
     "react-helmet": "^6.1.0",
-    "styled-components": "^5.3.5",
     "sweetalert2": "^11.4.17"
   }
 }
