@@ -274,23 +274,32 @@ export default function NotificationFeed({
                 </h3>
                 <div className={styles.btn__group}>
                   <div className={styles.tooltip}>
-                    <IconButton color={color} onClick={saveData}>
+                    <button
+                      className={styles.btn}
+                      style={{ color: color ? color : 'blue' }}
+                      onClick={saveData}
+                    >
                       <i className='fas fa-redo'></i>
-                    </IconButton>
+                    </button>
                     <span className={styles.tooltiptext}>Refresh</span>
                   </div>
                   <div className={styles.tooltip}>
-                    <IconButton color={color} onClick={markAllRead}>
+                    <button
+                      className={styles.btn}
+                      style={{ color: color ? color : 'blue' }}
+                      onClick={markAllRead}
+                    >
                       <i className='fas fa-check-double'></i>
-                    </IconButton>
+                    </button>
                     <span className={styles.tooltiptext}>Mark all as read</span>
                   </div>
-                  <IconButton
-                    color='rgb(104, 101, 101)'
+                  <button
+                    className={styles.btn}
+                    style={{ color: 'rgb(104, 101, 101)', marginLeft: '1rem' }}
                     onClick={() => setIsOpen(false)}
                   >
                     <i className='fas fa-times'></i>
-                  </IconButton>
+                  </button>
                 </div>
               </div>
               <p className={styles.date}>
