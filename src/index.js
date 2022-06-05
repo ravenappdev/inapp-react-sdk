@@ -1,7 +1,7 @@
 import React from 'react'
-import Notifications from './notifications'
 import styles from './styles.module.css'
 import Helmet from 'react-helmet'
+import NotificationFeed from './components/NotificationFeed'
 
 export const InAppNotificationCenter = ({
   color = 'blue',
@@ -24,7 +24,7 @@ export const InAppNotificationCenter = ({
         />
       </Helmet>
       <div style={{ fontFamily: fontStyle ? fontStyle : 'inherit' }}>
-        <Notifications
+        <NotificationFeed
           color={color}
           indicatorType={indicatorType}
           fontStyle={fontStyle}

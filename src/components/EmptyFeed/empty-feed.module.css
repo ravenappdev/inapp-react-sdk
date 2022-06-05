@@ -1,0 +1,25 @@
+.container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.bubble__height{
+  height:300px;
+}
+
+.full__height{
+  height:calc(100vh - 71.8px) ;
+}
+
+
+.container i {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  color: blue;
+  font-size: 3rem;
+  margin-bottom: 2rem;
+  margin-top: -1rem;
+}

@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
-import styles from './notification.module.css'
-import { updateNotificationService } from '../api/notificationService'
-import { getDateTimeString, timeDiff } from '../api/utils'
+import styles from './notification-content.module.css'
+import { updateNotificationService } from '../../api/notificationService'
+import { getDateTimeString, timeDiff } from '../../api/utils'
 
 export default function Notification({
   userId,

@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react'
-import styles from './bellicon.module.css'
+import styles from './notification-icon.module.css'
 
-export default function BellIcon({
+export default function NotificationIcon({
   color,
   indicatorType,
   count,

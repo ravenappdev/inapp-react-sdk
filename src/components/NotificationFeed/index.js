@@ -7,15 +7,17 @@ import {
   markAllReadService,
   fetchCountService,
   updateLastSeenService
-} from '../api/notificationService'
-import Notification from './notification'
-import styles from './notifications.module.css'
+} from '../../api/notificationService'
+import Notification from '../NotificationContent'
+import NotificationIcon from '../NotificationIcon'
+import styles from './notification-feed.module.css'
 import Ably from 'ably'
 import Swal from 'sweetalert2'
-import BellIcon from '../bell-icon'
-import { setTitle } from '../api/utils'
+import { setTitle } from '../../api/utils'
+import EmptyFeed from '../EmptyFeed'
+import Spinner from '../Spinner'
 
-export default function Notifications({
+export default function NotificationFeed({
   color,
   indicatorType,
   fontStyle,
@@ -58,7 +60,6 @@ export default function Notifications({
     }
   }
 
-  
   async function initialize() {
     try {
       fetchCount()
@@ -213,12 +214,11 @@ export default function Notifications({
     setCount(0)
     setTitle(0)
     await updateLastSeenService(userId, appId)
-    
   }
 
   return (
     <React.Fragment>
-      <BellIcon
+      <NotificationIcon
         color={color}
         indicatorType={indicatorType}
         count={count}
@@ -341,33 +341,18 @@ export default function Notifications({
                 )}
               </div>
             )}
-            {isLoading && (
-              <div
-                className={`${styles.loading__main}
-         ${displayStyle === 'bubble' ? styles.bubbleHeight : null}
-        ${displayStyle === 'drawer' ? styles.fullHeight : null}`}
-              >
-                <div
-                  className={styles.loading}
-                  style={{ borderTopColor: color ? color : 'blue' }}
-                ></div>
-              </div>
-            )}
-            {!isLoading && notifications.length === 0 && (
-              <div
-                className={`${styles.loading__main}
-         ${displayStyle === 'bubble' ? styles.bubbleHeight : null}
-        ${displayStyle === 'drawer' ? styles.fullHeight : null}`}
-              >
-                <div className={styles.no__notifications}>
-                  <i
-                    className='fas fa-comment-slash'
-                    style={{ color: color ? color : 'blue' }}
-                  ></i>
-                  <p>No notifications present</p>
-                </div>
-              </div>
-            )}
+
+            <Spinner
+              displayStyle={displayStyle}
+              color={color}
+              show={isLoading}
+            ></Spinner>
+
+            <EmptyFeed
+              displayStyle={displayStyle}
+              color={color}
+              show={!isLoading && notifications.length === 0}
+            />
           </div>
         </div>
       )}
