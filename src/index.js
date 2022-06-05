@@ -11,7 +11,7 @@ export const InAppNotificationCenter = ({
   appId,
   signature,
   onClickNotification,
-  displayStyle = 'bubble',
+  displayStyle = 'drawer',
   position = 'left'
 }) => {
   return (

@@ -234,7 +234,8 @@ export default function NotificationFeed({
           className={styles.wrapper}
           onClick={(e) => {
             if (
-              e.target.className === '_notifications-module__wrapper__f--lY' &&
+              e.target.className ===
+                '_notification-feed-module__wrapper__2Zeb3' &&
               isOpen
             ) {
               setIsOpen(false)

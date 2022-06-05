@@ -47,7 +47,10 @@ export default function Notification({
         className={styles.notification}
         onClick={(e) => {
           if (onClickNotification) {
-            if (e.target.className !== '_notification-module__action__3b0i1') {
+            if (
+              e.target.className !==
+              '_notification-content-module__action__2_k2l'
+            ) {
               if (notification.status === 'UNREAD') {
                 updateNotificationUtil('READ', notification.message_id)
               }
@@ -139,7 +142,7 @@ export default function Notification({
           onClick={(e) => {
             if (
               e.target.className ===
-                '_notification-module__modal__background__2fFDe' &&
+                '_notification-content-module__modal__background__1I0-g' &&
               isDeleteDialogOpen
             ) {
               setIsDeleteDialogOpen(false)
