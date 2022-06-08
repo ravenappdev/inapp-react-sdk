@@ -79,7 +79,7 @@ npm install
 ```
 cd example
 ```
-Pass the userId, appId and signature variables to the InAppNotificationCenter component in example/src/App.js
+Pass the userId, appId and signature values to the InAppNotificationCenter component in example/src/App.js
 
 ## Start the app.
 
