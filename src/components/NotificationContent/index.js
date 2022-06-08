@@ -48,8 +48,8 @@ export default function Notification({
         onClick={(e) => {
           if (onClickNotification) {
             if (
-              e.target.className !==
-              '_notification-content-module__action__2_k2l'
+              e.target.id !==
+              'action'
             ) {
               if (notification.status === 'UNREAD') {
                 updateNotificationUtil('READ', notification.message_id)
@@ -90,6 +90,7 @@ export default function Notification({
                   {notification.status !== 'READ' && (
                     <div
                       className={styles.action}
+                      id='action'
                       onClick={(e) =>
                         updateNotification('READ', notification.message_id)
                       }
@@ -101,6 +102,7 @@ export default function Notification({
                   {notification.status !== 'UNREAD' && (
                     <div
                       className={styles.action}
+                      id='action'
                       onClick={() =>
                         updateNotification('UNREAD', notification.message_id)
                       }
@@ -111,6 +113,7 @@ export default function Notification({
                   {notification.status !== 'ARCHIVE' && (
                     <div
                       className={styles.action}
+                      id='action'
                       onClick={() =>
                         updateNotification('ARCHIVE', notification.message_id)
                       }
@@ -139,12 +142,9 @@ export default function Notification({
       {isDeleteDialogOpen && (
         <div
           className={styles.modal__background}
+          id='modalBg'
           onClick={(e) => {
-            if (
-              e.target.className ===
-                '_notification-content-module__modal__background__1I0-g' &&
-              isDeleteDialogOpen
-            ) {
+            if (e.target.id === 'modalBg' && isDeleteDialogOpen) {
               setIsDeleteDialogOpen(false)
             }
           }}

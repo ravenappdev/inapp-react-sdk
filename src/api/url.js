@@ -1,4 +1,4 @@
-export const API_BASE_URL = 'https://api.staging.ravenapp.dev'
+export const API_BASE_URL = 'https://api.ravenapp.dev'
 export const MARK_ALL_READ =
   API_BASE_URL + '/v1/apps/%s/in_app_notifications/read_all'
 export const FETCH_NOTIFICATIONS =

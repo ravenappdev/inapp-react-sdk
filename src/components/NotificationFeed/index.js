@@ -232,10 +232,11 @@ export default function NotificationFeed({
             position: displayStyle === 'drawer' ? 'fixed' : 'relative'
           }}
           className={styles.wrapper}
+          id="wrapper"
           onClick={(e) => {
             if (
-              e.target.className ===
-                '_notification-feed-module__wrapper__2Zeb3' &&
+              e.target.id ===
+                'wrapper' &&
               isOpen
             ) {
               setIsOpen(false)
