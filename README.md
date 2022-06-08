@@ -65,7 +65,7 @@ You can follow the below process to see the demo of In-App React SDK.
 ## Clone this repo
 
 ```
-git clone https://github.com/ravenappdev/inapp-react-testing.git
+git clone https://github.com/ravenappdev/inapp-react-sdk.git
 ```
 
 ## Run this command in the root folder.
