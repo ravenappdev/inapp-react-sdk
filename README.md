@@ -17,13 +17,21 @@ npm i @ravenapp/raven-inapp-react
 
 ### Step 3.
 
-Inorder to start using InApp React SDK ,import InAppNotificationCenter and styles.
+Inorder to start using InApp React SDK ,intialize library and import InAppNotificationCenter and styles.
 
 ```
 import React from 'react'
 
-import { InAppNotificationCenter } from '@ravenapp/raven-inapp-react'
+import { InAppNotificationCenter, countService } from '@ravenapp/raven-inapp-react'
 import '@ravenapp/raven-inapp-react/dist/index.css'
+
+useEffect(() => {
+    countService.intialize(
+      <appId>,
+      <userId>,
+      <signature>
+    )
+}, [])
 
 const App = () => {
   return (
@@ -31,9 +39,6 @@ const App = () => {
       color="<color>"
       indicatorType="<indicator_type>"
       fontStyle="<fontStyle>"
-      userId="<user_id>"
-      appId="<app_id>"
-      signature="<signature>"
       displayStyle="<displayStyle>"
       position="<position>"
       onClickNotification="<callbackFunction_reference>"
@@ -56,7 +61,45 @@ export default App
 |displayStyle|  displayStyle can be either 'drawer' or 'bubble' or 'fullScreen'. Bubble displays the notification list inside a popover. Drawer displays the notification list as full  height on the right or left side of the screen depending on the position value. FullScreen comes with no bell-icon and inherits height and width from parent.|'drawer','bubble' and 'fullScreen' (only strings) |
 |position| If the displayStyle is 'drawer' then position accepts two values, i.e 'left' and 'right'. If the display style is 'bubble' then position accepts three values, i.e 'left', 'center' and 'right'.|'left', 'right', 'center' (only strings) |
 
-* Note: userId, appId and signature are the compulsory attributes, remaining are optional.
+* Do not forget to call deintialize method when user logs out otherwise user will receive notifications event after logging out. You can access the deintialize method by importing countService.
+* When display style is 'fullScreen', there will not be bell icon. Inorder to access new notification's count, import the countService and subscribe the count.
+* When display style is 'fullScreen', you can remove the header by passing header={false} to the InAppNotificationCenter component. In that case, you can access to the unread count, mark all read, reload data by importing countService.
+  - deintialize - countService.deintialize()
+  - mark all read - countService.markAllRead()
+  - reload data - countService.reloadData()
+  - update last seen - countService.updateLastSeen() (call this function when displayStyle is 'fullScreen' and header = {false} to update the last seen)
+
+```
+import React from 'react'
+
+import { InAppNotificationCenter, countService } from '@ravenapp/raven-inapp-react'
+import '@ravenapp/raven-inapp-react/dist/index.css'
+
+useEffect(() => {
+    countService.intialize(
+      <appId>,
+      <userId>,
+      <signature>
+    )
+    countService.count.subscribe((res) => console.log(res))
+    countService.unread.subscribe((res) => console.log(res))
+}, [])
+
+const App = () => {
+  return (
+    <InAppNotificationCenter
+      color="<color>"
+      indicatorType="<indicator_type>"
+      fontStyle="<fontStyle>"
+      displayStyle="<displayStyle>"
+      position="<position>"
+      onClickNotification="<callbackFunction_reference>"
+    />
+  )
+}
+
+export default App
+```
 
 ### In-App React Demo App
 
